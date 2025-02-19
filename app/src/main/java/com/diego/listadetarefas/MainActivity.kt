@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
             ListaDeTarefasTheme {
                 val navController = rememberNavController()
 
-                NavHost(navController = navController, startDestination = "listaTarefa"){
+                NavHost(navController = navController, startDestination = "listaTarefas"){
                     composable(
                         route = "listaTarefas"
                     ){
