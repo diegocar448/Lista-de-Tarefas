@@ -10,6 +10,8 @@ val Teal200 = Color(0xFF03DAC5)
 val WHITE = Color(0xFFFFFFFF)
 val BLACK = Color(0xFF000000)
 
+val LIGHT_BLUE = Color(0xFF03A9F4)
+
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
