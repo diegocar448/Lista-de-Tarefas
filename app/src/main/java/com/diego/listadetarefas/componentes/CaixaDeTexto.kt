@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.diego.listadetarefas.ui.theme.BLACK
 import com.diego.listadetarefas.ui.theme.LIGHT_BLUE
+import com.diego.listadetarefas.ui.theme.ShapeEditText
 import com.diego.listadetarefas.ui.theme.WHITE
 
 
@@ -42,7 +43,8 @@ fun CaixaDeTexto(
             //textColor
             focusedTextColor = BLACK, // Cor do texto quando focado equivale ao textColor
             //unfocusedTextColor = Color.DarkGray // Cor do texto quando não focado
-        )
+        ),
+        shape = ShapeEditText.small
     )
 
 }
