@@ -70,5 +70,8 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
+    //Constraintlayout para alinhar os componentes
+    implementation(libs.androidx.constraintlayout.compose)
+
 
 }

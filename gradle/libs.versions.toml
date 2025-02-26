@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.3"
+constraintlayoutCompose = "1.1.1"
 hiltAndroid = "2.51.1"
 hiltNavigationFragment = "1.2.0"
 kotlin = "2.1.0"
@@ -13,6 +14,7 @@ composeBom = "2025.02.00"
 navigationCompose = "2.8.7"
 
 [libraries]
+androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationFragment" }
 androidx-hilt-navigation-fragment = { module = "androidx.hilt:hilt-navigation-fragment", version.ref = "hiltNavigationFragment" }
