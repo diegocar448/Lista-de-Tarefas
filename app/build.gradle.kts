@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -72,6 +73,9 @@ dependencies {
 
     //Constraintlayout para alinhar os componentes
     implementation(libs.androidx.constraintlayout.compose)
+
+    //Google service dependencies
+    implementation(libs.firebase.bom)
 
 
 }
