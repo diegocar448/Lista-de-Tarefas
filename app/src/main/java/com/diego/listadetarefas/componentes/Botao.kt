@@ -18,7 +18,7 @@ fun Botao(
 ){
 
     Button(
-        onClick = {},
+        onClick = onClick,
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = LIGHT_BLUE,
