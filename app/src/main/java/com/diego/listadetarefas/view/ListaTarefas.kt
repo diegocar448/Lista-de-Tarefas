@@ -35,6 +35,7 @@ import com.diego.listadetarefas.model.Tarefa
 import com.diego.listadetarefas.ui.theme.BLACK
 import com.diego.listadetarefas.ui.theme.Purple700
 import com.diego.listadetarefas.ui.theme.WHITE
+import com.google.firebase.Firebase
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
