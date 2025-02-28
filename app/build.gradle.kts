@@ -78,5 +78,8 @@ dependencies {
     //Google service dependencies
     implementation(libs.firebase.bom)
 
+    //Cloud Storage Firebase
+    implementation(libs.firebase.storage.ktx)
+
 
 }
