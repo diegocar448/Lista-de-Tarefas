@@ -28,12 +28,12 @@ import com.diego.listadetarefas.ui.theme.WHITE
 @Composable
 fun TarefaItem(
     position: Int,
-    listaTarefa: MutableList<Tarefa>
+    listaTarefas: MutableList<Tarefa>
 ){
 
-    val tituloTarefa = listaTarefa[position].tarefa
-    val descricaoTarefa = listaTarefa[position].descricao
-    val prioridade = listaTarefa[position].prioridade
+    val tituloTarefa = listaTarefas[position].tarefa
+    val descricaoTarefa = listaTarefas[position].descricao
+    val prioridade = listaTarefas[position].prioridade
 
     var nivelDePrioridade: String = when(prioridade){
         0 -> {

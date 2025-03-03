@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -32,6 +33,7 @@ import androidx.navigation.NavController
 import com.diego.listadetarefas.R
 import com.diego.listadetarefas.itemlista.TarefaItem
 import com.diego.listadetarefas.model.Tarefa
+import com.diego.listadetarefas.repositorio.TarefasRepositorio
 import com.diego.listadetarefas.ui.theme.BLACK
 import com.diego.listadetarefas.ui.theme.Purple700
 import com.diego.listadetarefas.ui.theme.WHITE
@@ -43,6 +45,10 @@ import com.google.firebase.Firebase
 fun ListaTarefas(
     navController: NavController
 ){
+
+    val tarefasRepositorio = TarefasRepositorio()
+
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -80,39 +86,7 @@ fun ListaTarefas(
         }
     ) {paddingValues ->
 
-        val listaTarefas: MutableList<Tarefa> = mutableListOf(
-            Tarefa(
-                tarefa = "Estudar Kotlin mobile",
-                descricao = "asdfasdfasdfasdf",
-                prioridade = 0
-            ),
-            Tarefa(
-                tarefa = "Estudar NextJs",
-                descricao = "asdfasdfasdfasdf",
-                prioridade = 1
-            ),
-            Tarefa(
-                tarefa = "Estudar React",
-                descricao = "asdfasdfasdfasdf",
-                prioridade = 2
-            ),
-            Tarefa(
-                tarefa = "Estudar Swift IOS",
-                descricao = "asdfasdfasdfasdf",
-                prioridade = 3
-            ),
-            Tarefa(
-                tarefa = "Jogar um pouquinho",
-                descricao = "asdfasdfasdfasdf",
-                prioridade = 3
-            ),
-            Tarefa(
-                tarefa = "Estudar Inglês",
-                descricao = "asdfasdfasdfasdf",
-                prioridade = 3
-            )
-
-        )
+        val listaTarefas = tarefasRepositorio.recuperarTarefas().collectAsState(mutableListOf()).value
 
         LazyColumn(
             modifier = Modifier.fillMaxSize()
@@ -120,8 +94,11 @@ fun ListaTarefas(
             verticalArrangement = Arrangement.Top
         ){
             itemsIndexed(listaTarefas){position, _ ->
-                TarefaItem(position, listaTarefas)
+                TarefaItem(position = position, listaTarefas = listaTarefas)
             }
+
         }
+
+
     }
 }
