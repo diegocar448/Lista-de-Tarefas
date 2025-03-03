@@ -49,4 +49,14 @@ class DataSource {
         }
         return todasTarefas
     }
+
+
+    //deletar pegando pelo parâmetro tarefa do firestore
+    fun deletarTarefa(tarefa:String){
+        db.collection("tarefas").document(tarefa).delete().addOnCompleteListener{
+
+        }.addOnFailureListener{
+
+        }
+    }
 }
