@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -57,6 +58,10 @@ fun TarefaItem(
 
     val scope = rememberCoroutineScope()
     val tarefasRepositorio = TarefasRepositorio()
+
+    var isChecked by remember{
+        mutableStateOf(false)
+    }
 
 
     //config. alertDialog
@@ -134,7 +139,7 @@ fun TarefaItem(
         ConstraintLayout(
             modifier = Modifier.padding(20.dp)
         ) {
-            val (txtTitulo, txtDescricao, cardPrioridade, txtPrioridade, btDeletar) = createRefs()
+            val (txtTitulo, txtDescricao, cardPrioridade, txtPrioridade, btDeletar, checkTarefa) = createRefs()
 
             Text(
                 text = tituloTarefa.toString(),
@@ -191,6 +196,25 @@ fun TarefaItem(
                     contentDescription = null,
                 )
             }
+
+            Checkbox(
+                checked = isChecked,
+                onCheckedChange = {
+                    isChecked = it
+
+                    if(isChecked){
+                        isChecked = true
+                    }else{
+                        isChecked = false
+                    }
+                },
+                modifier = Modifier.constrainAs(checkTarefa){
+                    start.linkTo(btDeletar.end, margin = 10.dp)
+                    top.linkTo(txtDescricao.bottom, margin = 10.dp)
+                    end.linkTo(parent.end, margin = 10.dp)
+                    bottom.linkTo(parent.bottom, margin = 10.dp)
+                }
+            )
 
 
         }
