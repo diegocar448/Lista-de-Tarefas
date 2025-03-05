@@ -8,8 +8,8 @@ class TarefasRepositorio() {
 
     private val dataSource = DataSource()
 
-    fun salvarTarefa(tarefa: String, descricao: String, prioridade: Int){
-        dataSource.salvarTarefa(tarefa, descricao, prioridade)
+    fun salvarTarefa(tarefa: String, descricao: String, prioridade: Int, checkTarefa: Boolean){
+        dataSource.salvarTarefa(tarefa, descricao, prioridade, checkTarefa)
     }
 
     //vai pegar os dados da camada datasource e repassar para o ListaTarefas
@@ -20,5 +20,9 @@ class TarefasRepositorio() {
     //remover passando tarefa parâmetro
     fun deletarTarefa(tarefa: String){
         dataSource.deletarTarefa(tarefa)
+    }
+
+    fun atualizarEstadoTarefa(tarefa: String, checkTarefa: Boolean){
+        dataSource.atualizarEstadoTarefa(tarefa, checkTarefa)
     }
 }

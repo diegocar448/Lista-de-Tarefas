@@ -12,6 +12,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxColors
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -55,12 +57,13 @@ fun TarefaItem(
     val descricaoTarefa = listaTarefas[position].descricao
     val prioridade = listaTarefas[position].prioridade
     val tarefas = listaTarefas[position].prioridade
+    val tarefaConcluida = listaTarefas[position].checkTarefa
 
     val scope = rememberCoroutineScope()
     val tarefasRepositorio = TarefasRepositorio()
 
     var isChecked by remember{
-        mutableStateOf(false)
+        mutableStateOf(tarefaConcluida)
     }
 
 
@@ -198,22 +201,29 @@ fun TarefaItem(
             }
 
             Checkbox(
-                checked = isChecked,
+                checked = isChecked!!,
                 onCheckedChange = {
                     isChecked = it
 
-                    if(isChecked){
-                        isChecked = true
-                    }else{
-                        isChecked = false
+                    scope.launch(Dispatchers.IO){
+                        if(isChecked!!){
+                            tarefasRepositorio.atualizarEstadoTarefa(tituloTarefa!!, true)
+                        }else{
+                            tarefasRepositorio.atualizarEstadoTarefa(tituloTarefa!!, false)
+                        }
                     }
+
                 },
                 modifier = Modifier.constrainAs(checkTarefa){
                     start.linkTo(btDeletar.end, margin = 10.dp)
                     top.linkTo(txtDescricao.bottom, margin = 10.dp)
                     end.linkTo(parent.end, margin = 10.dp)
                     bottom.linkTo(parent.bottom, margin = 10.dp)
-                }
+                },
+                colors = CheckboxDefaults.colors(
+                    checkedColor = RADIO_BUTTON_GREEN_SELECTED,
+                    uncheckedColor = Color.Black
+                )
             )
 
 

@@ -17,12 +17,13 @@ class DataSource {
     //observar fluxo de dados que vai entrar em todas as tarefas
     private val todasTarefas: StateFlow<MutableList<Tarefa>> = _todasTarefas
 
-    fun salvarTarefa(tarefa: String, descricao: String, prioridade: Int){
+    fun salvarTarefa(tarefa: String, descricao: String, prioridade: Int, checkTarefa: Boolean){
 
         val tarefaMap = hashMapOf(
             "tarefa" to tarefa,
             "descricao" to descricao,
-            "prioridade" to prioridade
+            "prioridade" to prioridade,
+            "checkTarefa" to checkTarefa
         )
 
         db.collection("tarefas").document(tarefa).set(tarefaMap).addOnCompleteListener{
@@ -54,6 +55,14 @@ class DataSource {
     //deletar pegando pelo parâmetro tarefa do firestore
     fun deletarTarefa(tarefa:String){
         db.collection("tarefas").document(tarefa).delete().addOnCompleteListener{
+
+        }.addOnFailureListener{
+
+        }
+    }
+
+    fun atualizarEstadoTarefa(tarefa: String, checkTarefa:Boolean){
+        db.collection("tarefas").document(tarefa).update("checkTarefa", checkTarefa).addOnCompleteListener{
 
         }.addOnFailureListener{
 

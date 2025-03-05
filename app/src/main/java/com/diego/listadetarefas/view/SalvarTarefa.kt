@@ -190,28 +190,28 @@ fun SalvarTarefa(
                         if(tituloTarefa.isEmpty()){
                             mensagem = false
                         }else if(tituloTarefa.isNotEmpty() && descricaoTarefa.isNotEmpty() && prioridadeBaixaTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_BAIXA)
+                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_BAIXA, checkTarefa = false)
                             mensagem = true
                         }else if(tituloTarefa.isNotEmpty() && descricaoTarefa.isNotEmpty() && prioridadeMediaTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_MEDIA)
+                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_MEDIA, checkTarefa = false)
                             mensagem = true
                         }else if(tituloTarefa.isNotEmpty() && descricaoTarefa.isNotEmpty() && prioridadeMediaTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_ALTA)
+                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_ALTA, checkTarefa = false)
                             mensagem = true
                         }else if(tituloTarefa.isNotEmpty() && descricaoTarefa.isNotEmpty() && semPrioridadeTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.SEM_PRIORIDADE)
+                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.SEM_PRIORIDADE, checkTarefa = false)
                             mensagem = true
                         }else if(tituloTarefa.isNotEmpty() && prioridadeBaixaTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_BAIXA)
+                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_BAIXA, checkTarefa = false)
                             mensagem = true
                         }else if(tituloTarefa.isNotEmpty() && prioridadeMediaTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_MEDIA)
+                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_MEDIA, checkTarefa = false)
                             mensagem = true
                         }else if(tituloTarefa.isNotEmpty() && prioridadeAltaTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_ALTA)
+                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_ALTA, checkTarefa = false)
                             mensagem = true
                         }else{
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.SEM_PRIORIDADE)
+                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.SEM_PRIORIDADE, checkTarefa = false)
                             mensagem = true                        }
                     }
 
