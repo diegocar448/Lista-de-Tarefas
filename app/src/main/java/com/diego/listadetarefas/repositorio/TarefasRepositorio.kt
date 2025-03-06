@@ -2,11 +2,13 @@ package com.diego.listadetarefas.repositorio
 
 import com.diego.listadetarefas.datasource.DataSource
 import com.diego.listadetarefas.model.Tarefa
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class TarefasRepositorio() {
 
-    private val dataSource = DataSource()
+@ViewModelScoped
+class TarefasRepositorio @Inject constructor(private val dataSource: DataSource) {
 
     fun salvarTarefa(tarefa: String, descricao: String, prioridade: Int, checkTarefa: Boolean){
         dataSource.salvarTarefa(tarefa, descricao, prioridade, checkTarefa)

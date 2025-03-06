@@ -12,9 +12,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,29 +24,29 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.diego.listadetarefas.R
 import com.diego.listadetarefas.model.Tarefa
-import com.diego.listadetarefas.repositorio.TarefasRepositorio
 import com.diego.listadetarefas.ui.theme.RADIO_BUTTON_GREEN_SELECTED
 import com.diego.listadetarefas.ui.theme.RADIO_BUTTON_RED_SELECTED
 import com.diego.listadetarefas.ui.theme.RADIO_BUTTON_YELLOW_SELECTED
 import com.diego.listadetarefas.ui.theme.ShapeCardPrioridade
 import com.diego.listadetarefas.ui.theme.WHITE
+import com.diego.listadetarefas.viewmodel.TarefasViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TarefaItem(
     position: Int,
     listaTarefas: MutableList<Tarefa>,
     context: Context,
-    navController: NavController
+    navController: NavController,
+    viewModel: TarefasViewModel = hiltViewModel()
 ){
 
     var showDialog by remember { mutableStateOf(false) }
@@ -60,7 +58,6 @@ fun TarefaItem(
     val tarefaConcluida = listaTarefas[position].checkTarefa
 
     val scope = rememberCoroutineScope()
-    val tarefasRepositorio = TarefasRepositorio()
 
     var isChecked by remember{
         mutableStateOf(tarefaConcluida)
@@ -77,7 +74,7 @@ fun TarefaItem(
             confirmButton = {
                 androidx.compose.material3.TextButton(
                     onClick = {
-                        tarefasRepositorio.deletarTarefa(tituloTarefa.toString())
+                        viewModel.deletarTarefa(tituloTarefa.toString())
 
                         scope.launch(Dispatchers.Main){
                             listaTarefas.removeAt(position)
@@ -99,7 +96,7 @@ fun TarefaItem(
         )
     }
 
-    var nivelDePrioridade: String = when(prioridade){
+    val nivelDePrioridade: String = when(prioridade){
         0 -> {
             "Sem prioridade"
         }
@@ -207,9 +204,9 @@ fun TarefaItem(
 
                     scope.launch(Dispatchers.IO){
                         if(isChecked!!){
-                            tarefasRepositorio.atualizarEstadoTarefa(tituloTarefa!!, true)
+                            viewModel.atualizarEstadoTarefa(tituloTarefa!!, true)
                         }else{
-                            tarefasRepositorio.atualizarEstadoTarefa(tituloTarefa!!, false)
+                            viewModel.atualizarEstadoTarefa(tituloTarefa!!, false)
                         }
                     }
 
@@ -241,8 +238,3 @@ fun TarefaItem(
     }
 }
 
-//@Composable
-//@Preview
-//private fun TarefaItemPreview(){
-//    TarefaItem()
-//}

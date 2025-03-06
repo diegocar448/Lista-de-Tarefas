@@ -33,11 +33,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.diego.listadetarefas.componentes.Botao
 import com.diego.listadetarefas.componentes.CaixaDeTexto
 import com.diego.listadetarefas.constantes.Constantes
-import com.diego.listadetarefas.repositorio.TarefasRepositorio
 import com.diego.listadetarefas.ui.theme.Purple700
 import com.diego.listadetarefas.ui.theme.RADIO_BUTTON_GREEN_DISABLED
 import com.diego.listadetarefas.ui.theme.RADIO_BUTTON_GREEN_SELECTED
@@ -46,6 +46,7 @@ import com.diego.listadetarefas.ui.theme.RADIO_BUTTON_RED_SELECTED
 import com.diego.listadetarefas.ui.theme.RADIO_BUTTON_YELLOW_DISABLED
 import com.diego.listadetarefas.ui.theme.RADIO_BUTTON_YELLOW_SELECTED
 import com.diego.listadetarefas.ui.theme.WHITE
+import com.diego.listadetarefas.viewmodel.TarefasViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -53,13 +54,14 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SalvarTarefa(
-    navController: NavController
+    navController: NavController,
+    viemModel: TarefasViewModel = hiltViewModel()
 ){
+
 
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    //iniciar a classe repositorio
-    val tarefasRepositorio = TarefasRepositorio()
+
 
     Scaffold(
         topBar = {
@@ -190,28 +192,28 @@ fun SalvarTarefa(
                         if(tituloTarefa.isEmpty()){
                             mensagem = false
                         }else if(tituloTarefa.isNotEmpty() && descricaoTarefa.isNotEmpty() && prioridadeBaixaTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_BAIXA, checkTarefa = false)
+                            viemModel.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_BAIXA, checkTarefa = false)
                             mensagem = true
                         }else if(tituloTarefa.isNotEmpty() && descricaoTarefa.isNotEmpty() && prioridadeMediaTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_MEDIA, checkTarefa = false)
+                            viemModel.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_MEDIA, checkTarefa = false)
                             mensagem = true
                         }else if(tituloTarefa.isNotEmpty() && descricaoTarefa.isNotEmpty() && prioridadeMediaTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_ALTA, checkTarefa = false)
+                            viemModel.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_ALTA, checkTarefa = false)
                             mensagem = true
                         }else if(tituloTarefa.isNotEmpty() && descricaoTarefa.isNotEmpty() && semPrioridadeTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.SEM_PRIORIDADE, checkTarefa = false)
+                            viemModel.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.SEM_PRIORIDADE, checkTarefa = false)
                             mensagem = true
                         }else if(tituloTarefa.isNotEmpty() && prioridadeBaixaTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_BAIXA, checkTarefa = false)
+                            viemModel.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_BAIXA, checkTarefa = false)
                             mensagem = true
                         }else if(tituloTarefa.isNotEmpty() && prioridadeMediaTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_MEDIA, checkTarefa = false)
+                            viemModel.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_MEDIA, checkTarefa = false)
                             mensagem = true
                         }else if(tituloTarefa.isNotEmpty() && prioridadeAltaTarefa){
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_ALTA, checkTarefa = false)
+                            viemModel.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.PRIORIDADE_ALTA, checkTarefa = false)
                             mensagem = true
                         }else{
-                            tarefasRepositorio.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.SEM_PRIORIDADE, checkTarefa = false)
+                            viemModel.salvarTarefa(tituloTarefa, descricaoTarefa, Constantes.SEM_PRIORIDADE, checkTarefa = false)
                             mensagem = true                        }
                     }
 
@@ -223,7 +225,7 @@ fun SalvarTarefa(
                         }else{
                             Toast.makeText(context, "Titulo é obrigatório!", Toast.LENGTH_SHORT).show()
                         }
-                    }
+                    } 
 
                 },
                 modifier = Modifier.fillMaxWidth().height(80.dp).padding(20.dp),
