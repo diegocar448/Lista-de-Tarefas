@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.diego.listadetarefas.ui.theme.ListaDeTarefasTheme
 import com.diego.listadetarefas.view.ListaTarefas
+import com.diego.listadetarefas.view.Login
 import com.diego.listadetarefas.view.SalvarTarefa
 import com.diego.listadetarefas.viewmodel.TarefasViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +26,12 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val tarefasViewModel:TarefasViewModel = hiltViewModel()
 
-                NavHost(navController = navController, startDestination = "listaTarefas"){
+                NavHost(navController = navController, startDestination = "login"){
+                    composable(
+                        route = "login"
+                    ){
+                        Login(navController, tarefasViewModel)
+                    }
                     composable(
                         route = "listaTarefas"
                     ){

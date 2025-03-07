@@ -30,9 +30,6 @@ class TarefasViewModel @Inject constructor(private val tarefasRepositorio: Taref
     fun recuperarTarefas(): Flow<MutableList<Tarefa>> {
         viewModelScope.launch {
             tarefasRepositorio.recuperarTarefas().collect{
-                println("UNO")
-                println(it.toString())
-                println("DUO")
                 _todasTarefas.value = it
             }
         }
