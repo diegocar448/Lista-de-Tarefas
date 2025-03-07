@@ -1,5 +1,6 @@
 package com.diego.listadetarefas
 
+import Cadastro
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.diego.listadetarefas.ui.theme.ListaDeTarefasTheme
-import com.diego.listadetarefas.view.Cadastro
+
 import com.diego.listadetarefas.view.ListaTarefas
 import com.diego.listadetarefas.view.Login
 import com.diego.listadetarefas.view.SalvarTarefa
@@ -36,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = "cadastro"
                     ){
-                        Cadastro(navController)
+                        Cadastro(navController, tarefasViewModel)
                     }
                     composable(
                         route = "listaTarefas"

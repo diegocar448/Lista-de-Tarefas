@@ -95,6 +95,13 @@ fun Login(
             var visibilidadeSenha by remember {
                 mutableStateOf(true)
             }
+
+            var mensagem by remember {
+                mutableStateOf("")
+            }
+
+
+
             
             var icon = if (visibilidadeSenha) {
                 painterResource(id = drawable.baseline_visibility)
@@ -189,7 +196,7 @@ fun Login(
                     else PasswordVisualTransformation()
             )
 
-            Text(text = "Senha errada!", fontSize = 18.sp, fontWeight = FontWeight.Medium, color = WHITE)
+            Text(text = mensagem, fontSize = 18.sp, fontWeight = FontWeight.Medium, color = WHITE)
 
             BotaoAuth(
                 onClick = {
