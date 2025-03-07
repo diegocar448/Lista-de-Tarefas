@@ -201,7 +201,7 @@ fun Login(
 
             TextButton(
                 onClick = {
-
+                    navController.navigate("cadastro")
                 }
             ) {
                 Text(
