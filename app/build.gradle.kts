@@ -68,6 +68,10 @@ dependencies {
     //Hilt
     implementation(libs.androidx.hilt.navigation.fragment)
     implementation(libs.androidx.hilt.navigation.compose)
+    // Using KTX libraries for Authentication and Cloud Firestore
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.google.firebase.firestore.ktx)
+
 
     //DaggerHiltAndroid
     implementation(libs.hilt.android)
