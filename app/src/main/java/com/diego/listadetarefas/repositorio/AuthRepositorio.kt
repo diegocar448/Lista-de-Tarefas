@@ -9,7 +9,7 @@ import javax.inject.Inject
 @ViewModelScoped
 class AuthRepositorio @Inject constructor(private val auth: Auth) {
 
-    fun cadastro(email:String, senha:String, listenerAuth: ListenerAuth){
-        auth.cadastro(email, senha, listenerAuth)
+    fun cadastro(nome: String, email:String, senha:String, listenerAuth: ListenerAuth){
+        auth.cadastro(nome, email, senha, listenerAuth)
     }
 }

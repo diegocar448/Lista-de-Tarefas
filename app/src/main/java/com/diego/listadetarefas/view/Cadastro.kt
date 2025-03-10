@@ -233,9 +233,10 @@ fun Cadastro(
 
             BotaoAuth(
                 onClick = {
-                    viewModel.cadastro(email, senha, object : ListenerAuth {
-                        override fun onSucess(mensagem: String) {
+                    viewModel.cadastro(nome, email, senha, object : ListenerAuth {
+                        override fun onSucess(mensagem: String, tela: String) {
                             Toast.makeText(context, mensagem, Toast.LENGTH_SHORT).show()
+                            navController.navigate(tela)
                         }
                         override fun onFailure(erro: String) {
                             mensagem = erro
