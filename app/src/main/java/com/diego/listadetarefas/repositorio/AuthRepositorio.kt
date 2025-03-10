@@ -12,4 +12,8 @@ class AuthRepositorio @Inject constructor(private val auth: Auth) {
     fun cadastro(nome: String, email:String, senha:String, listenerAuth: ListenerAuth){
         auth.cadastro(nome, email, senha, listenerAuth)
     }
+
+    fun login(email:String, senha:String, listenerAuth: ListenerAuth){
+        auth.login(email, senha, listenerAuth)
+    }
 }

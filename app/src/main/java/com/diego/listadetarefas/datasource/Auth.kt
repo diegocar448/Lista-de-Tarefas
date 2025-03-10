@@ -3,6 +3,7 @@ package com.diego.listadetarefas.datasource
 import com.diego.listadetarefas.listener.ListenerAuth
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
@@ -50,7 +51,25 @@ class Auth @Inject constructor() {
                     }
                     listenerAuth.onFailure(erro)
                 }
+        }
+    }
+    fun login(email: String, senha: String, listenerAuth: ListenerAuth){
+        if (email.isEmpty() || senha.isEmpty()) {
+            listenerAuth.onFailure("Preencher todo os campos!")
+        }else{
+            auth.signInWithEmailAndPassword(email, senha).addOnCompleteListener{ autenticacao ->
+                if (autenticacao.isSuccessful) {
+                    listenerAuth.onSucess("Sucesso ao fazer o login!", "listaTarefas")
+                }
+            }.addOnFailureListener{ exception ->
+                val erro = when(exception){
+                    is FirebaseAuthInvalidCredentialsException -> "A senha esta errada!"
+                    is FirebaseNetworkException -> "Sem conexao com a internet!"
+                    else -> "E-mail inválido!"
+                }
 
+                listenerAuth.onFailure(erro)
+            }
         }
     }
 }

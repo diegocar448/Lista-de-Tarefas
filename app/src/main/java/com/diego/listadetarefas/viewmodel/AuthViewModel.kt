@@ -15,4 +15,11 @@ class AuthViewModel @Inject constructor(private val authRepositorio: AuthReposit
             authRepositorio.cadastro(nome, email, senha, listenerAuth)
         }
     }
+
+    fun login(email: String, senha:String, listenerAuth: ListenerAuth){
+        viewModelScope.launch{
+            authRepositorio.login(email, senha, listenerAuth)
+        }
+
+    }
 }
