@@ -85,7 +85,7 @@ dependencies {
 
     //Cloud Storage Firebase
     implementation(libs.firebase.storage.ktx)
-    //implementation(platform(libs.firebase.bom))
+    implementation(platform(libs.firebase.bom))
 
     implementation(libs.play.services.basement)
 

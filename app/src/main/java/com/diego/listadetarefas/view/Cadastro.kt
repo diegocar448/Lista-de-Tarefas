@@ -239,6 +239,7 @@ fun Cadastro(
                             navController.navigate(tela)
                         }
                         override fun onFailure(erro: String) {
+                            Toast.makeText(context, erro, Toast.LENGTH_SHORT).show()
                             mensagem = erro
                         }
                     })
