@@ -50,6 +50,7 @@ import com.diego.listadetarefas.ui.theme.color1
 import com.diego.listadetarefas.ui.theme.color2
 import com.diego.listadetarefas.ui.theme.color3
 import com.diego.listadetarefas.ui.theme.color4
+import com.diego.listadetarefas.viewmodel.AuthViewModel
 import com.diego.listadetarefas.viewmodel.TarefasViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,7 +58,7 @@ import com.diego.listadetarefas.viewmodel.TarefasViewModel
 @Composable
 fun Cadastro(
     navController: NavController,
-    viewModel: TarefasViewModel = hiltViewModel()
+    viewModel: AuthViewModel = hiltViewModel()
 ){
 
     Scaffold(
