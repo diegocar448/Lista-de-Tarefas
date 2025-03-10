@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = "login"
                     ){
-                        Login(navController, tarefasViewModel)
+                        Login(navController)
                     }
                     composable(
                         route = "cadastro"

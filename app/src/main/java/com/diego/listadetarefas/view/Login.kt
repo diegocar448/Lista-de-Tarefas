@@ -57,8 +57,7 @@ import com.diego.listadetarefas.viewmodel.TarefasViewModel
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun Login(
-    navController: NavController,
-    viewModel: TarefasViewModel = hiltViewModel()
+    navController: NavController
 ){
 
     Scaffold(

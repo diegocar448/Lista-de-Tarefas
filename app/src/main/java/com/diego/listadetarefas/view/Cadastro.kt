@@ -1,4 +1,5 @@
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,6 +42,7 @@ import androidx.navigation.NavController
 import com.diego.listadetarefas.R
 import com.diego.listadetarefas.R.drawable
 import com.diego.listadetarefas.componentes.BotaoAuth
+import com.diego.listadetarefas.listener.ListenerAuth
 import com.diego.listadetarefas.ui.theme.DARK_BLUE
 import com.diego.listadetarefas.ui.theme.DARK_PINK
 import com.diego.listadetarefas.ui.theme.LIGHT_BLUE
@@ -61,6 +64,8 @@ fun Cadastro(
     viewModel: AuthViewModel = hiltViewModel()
 ){
 
+    val context = LocalContext.current
+
     Scaffold(
         modifier = Modifier.background(
             brush = Brush.linearGradient(
@@ -76,6 +81,9 @@ fun Cadastro(
         containerColor = Color.Transparent
 
     ) { //paddingValues ->
+
+
+
 
         Column(
             verticalArrangement = Arrangement.Center,
@@ -225,7 +233,14 @@ fun Cadastro(
 
             BotaoAuth(
                 onClick = {
-
+                    viewModel.cadastro(email, senha, object : ListenerAuth {
+                        override fun onSucess(mensagem: String) {
+                            Toast.makeText(context, mensagem, Toast.LENGTH_SHORT).show()
+                        }
+                        override fun onFailure(erro: String) {
+                            mensagem = erro
+                        }
+                    })
                 },
                 text = "Cadastrar"
             )
