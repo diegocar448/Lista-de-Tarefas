@@ -1,6 +1,7 @@
 package com.diego.listadetarefas.view
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,14 +9,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -32,6 +39,10 @@ import com.diego.listadetarefas.ui.theme.BLACK
 import com.diego.listadetarefas.ui.theme.Purple700
 import com.diego.listadetarefas.ui.theme.WHITE
 import com.diego.listadetarefas.viewmodel.TarefasViewModel
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -42,6 +53,36 @@ fun ListaTarefas(
     viewModel: TarefasViewModel = hiltViewModel()
 ){
     val context = LocalContext.current
+    var showDialog by remember { mutableStateOf(false) }
+
+    //config. alertDialog
+    @Composable
+    fun dialogDeslogar(onDismiss: () -> Unit, onConfirm: () -> Unit) {
+        AlertDialog(
+            onDismissRequest = { onDismiss() },
+            title = { Text("Sair") },
+            text = { Text("Deseja sair do aplicativo?") },
+            confirmButton = {
+                androidx.compose.material3.TextButton(
+                    onClick = {
+                        FirebaseAuth.getInstance().signOut()
+                        navController.navigate("login")
+                    }
+                ) {
+                    Text("Sim")
+                }
+            },
+            dismissButton = {
+                androidx.compose.material3.TextButton(
+                    onClick = { onDismiss() }
+                ) {
+                    Text("Não")
+                }
+            }
+        )
+    }
+
+
 
 
     Scaffold(
@@ -58,6 +99,15 @@ fun ListaTarefas(
                         fontWeight = FontWeight.Bold,
                         color = WHITE
                     )
+                },
+                actions = {
+                    TextButton(
+                        onClick = {
+                            showDialog = true
+                        }
+                    ) {
+                        Text(text = "Sair", fontSize = 16.sp, color = WHITE)
+                    }
                 },
                 modifier = Modifier.padding(bottom = 30.dp)
             )
@@ -81,6 +131,33 @@ fun ListaTarefas(
         }
     ) {paddingValues ->
 
+        //config. alertDialog
+        @Composable
+        fun dialogDeslogar(onDismiss: () -> Unit, onConfirm: () -> Unit) {
+            AlertDialog(
+                onDismissRequest = { onDismiss() },
+                title = { Text("Sair") },
+                text = { Text("Deseja sair do aplicativo?") },
+                confirmButton = {
+                    androidx.compose.material3.TextButton(
+                        onClick = {
+                            FirebaseAuth.getInstance().signOut()
+                            navController.navigate("login")
+                        }
+                    ) {
+                        Text("Sim")
+                    }
+                },
+                dismissButton = {
+                    androidx.compose.material3.TextButton(
+                        onClick = { onDismiss() }
+                    ) {
+                        Text("Não")
+                    }
+                }
+            )
+        }
+
 
         val listaTarefas = viewModel.recuperarTarefas().collectAsState(mutableListOf()).value
 
@@ -93,7 +170,19 @@ fun ListaTarefas(
                  TarefaItem(position = position, listaTarefas = listaTarefas, context = context, navController = navController, viewModel)
              }
         }
+    }
 
 
+
+
+
+    // Agora o Dialog está fora do Card e só aparece quando necessário
+    if (showDialog) {
+        dialogDeslogar(
+            onDismiss = { showDialog = false },
+            onConfirm = {
+                showDialog = false // Fecha o diálogo
+            }
+        )
     }
 }
