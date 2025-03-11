@@ -3,6 +3,7 @@ package com.diego.listadetarefas.repositorio
 import com.diego.listadetarefas.datasource.Auth
 import com.diego.listadetarefas.listener.ListenerAuth
 import dagger.hilt.android.scopes.ViewModelScoped
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
@@ -15,5 +16,9 @@ class AuthRepositorio @Inject constructor(private val auth: Auth) {
 
     fun login(email:String, senha:String, listenerAuth: ListenerAuth){
         auth.login(email, senha, listenerAuth)
+    }
+
+    fun verificarUsuarioLogado(): Flow<Boolean> {
+        return auth.verificarUsuarioLogado()
     }
 }

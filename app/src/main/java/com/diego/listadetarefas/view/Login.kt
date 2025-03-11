@@ -25,6 +25,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -66,6 +68,18 @@ fun Login(
 ){
 
     val context = LocalContext.current
+
+    var usuarioLogado = viewModel.verificarUsuarioLogado().collectAsState(initial = false).value
+
+
+    LaunchedEffect(usuarioLogado) {
+        if (usuarioLogado){
+            navController.navigate("listaTarefas")
+        }else{
+            usuarioLogado = false
+        }
+    }
+
 
     Scaffold(
         modifier = Modifier.background(

@@ -7,11 +7,19 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class Auth @Inject constructor() {
     val auth  = FirebaseAuth.getInstance()
     val db = FirebaseFirestore.getInstance()
+
+
+    //verificarUsuarioLogado verifica o fluxo de _verificarUsuarioLogado e atualiza
+    val _verificarUsuarioLogado = MutableStateFlow(false)
+    val verificarUsuarioLogado: StateFlow<Boolean> = _verificarUsuarioLogado
 
     fun cadastro(nome:String, email: String, senha: String, listenerAuth: ListenerAuth){
         if(nome.isEmpty() || email.isEmpty() || senha.isEmpty()){
@@ -71,5 +79,15 @@ class Auth @Inject constructor() {
                 listenerAuth.onFailure(erro)
             }
         }
+    }
+
+    //verificar usuario logado
+    fun verificarUsuarioLogado(): Flow<Boolean>{
+
+        //pegar usuario logado
+        val usuarioLogado = FirebaseAuth.getInstance().currentUser
+
+        _verificarUsuarioLogado.value = usuarioLogado != null
+        return verificarUsuarioLogado
     }
 }

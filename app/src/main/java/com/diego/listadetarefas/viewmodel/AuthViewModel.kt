@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.diego.listadetarefas.listener.ListenerAuth
 import com.diego.listadetarefas.repositorio.AuthRepositorio
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,6 +21,9 @@ class AuthViewModel @Inject constructor(private val authRepositorio: AuthReposit
         viewModelScope.launch{
             authRepositorio.login(email, senha, listenerAuth)
         }
+    }
 
+    fun verificarUsuarioLogado(): Flow<Boolean> {
+        return authRepositorio.verificarUsuarioLogado()
     }
 }
