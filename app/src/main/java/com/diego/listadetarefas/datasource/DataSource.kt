@@ -72,7 +72,14 @@ class DataSource @Inject constructor(){
 
     //deletar pegando pelo parâmetro tarefa do firestore
     fun deletarTarefa(tarefa:String){
-        db.collection("tarefas").document(tarefa).delete().addOnCompleteListener{
+        val usuarioID = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
+        db.collection("tarefas")
+            .document(usuarioID)
+            .collection("tarefas_usuario")
+            .document(tarefa)
+            .delete()
+            .addOnCompleteListener{
 
         }.addOnFailureListener{
 
@@ -80,7 +87,15 @@ class DataSource @Inject constructor(){
     }
 
     fun atualizarEstadoTarefa(tarefa: String, checkTarefa:Boolean){
-        db.collection("tarefas").document(tarefa).update("checkTarefa", checkTarefa).addOnCompleteListener{
+
+        val usuarioID = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
+        db.collection("tarefas")
+            .document(usuarioID)
+            .collection("tarefas_usuario")
+            .document(tarefa)
+            .update("checkTarefa", checkTarefa)
+            .addOnCompleteListener{
 
         }.addOnFailureListener{
 
