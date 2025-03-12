@@ -24,6 +24,8 @@ class DataSource @Inject constructor(){
 
     fun salvarTarefa(tarefa: String, descricao: String, prioridade: Int, checkTarefa: Boolean){
 
+        val usuarioID = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
         val tarefaMap = hashMapOf(
             "tarefa" to tarefa,
             "descricao" to descricao,
@@ -31,7 +33,12 @@ class DataSource @Inject constructor(){
             "checkTarefa" to checkTarefa
         )
 
-        db.collection("tarefas").document(tarefa).set(tarefaMap).addOnCompleteListener{
+        db.collection("tarefas")
+            .document(usuarioID)
+            //esse collection pegara uma sub colecao
+            .collection("tarefas_usuario")
+            .document(tarefa)
+            .set(tarefaMap).addOnCompleteListener{
 
         }.addOnFailureListener {
 
@@ -42,8 +49,14 @@ class DataSource @Inject constructor(){
     fun recuperarTarefas(): Flow<MutableList<Tarefa>> {
 
         val listaTarefas: MutableList<Tarefa> = mutableListOf()
+        val usuarioID = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
-        db.collection("tarefas").get().addOnCompleteListener{ querySnapshot ->
+
+        db.collection("tarefas")
+            .document(usuarioID)
+            .collection("tarefas_usuario")
+            .get()
+            .addOnCompleteListener{ querySnapshot ->
             if (querySnapshot.isSuccessful) {
                 for (documento in querySnapshot.result){
                     val tarefa = documento.toObject(Tarefa::class.java)
