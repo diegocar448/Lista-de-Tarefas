@@ -27,4 +27,8 @@ class TarefasRepositorio @Inject constructor(private val dataSource: DataSource)
     fun atualizarEstadoTarefa(tarefa: String, checkTarefa: Boolean){
         dataSource.atualizarEstadoTarefa(tarefa, checkTarefa)
     }
+
+    fun perfilUsuario(): Flow<String>{
+        return dataSource.perfilUsuario()
+    }
 }

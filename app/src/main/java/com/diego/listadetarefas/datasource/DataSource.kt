@@ -1,6 +1,7 @@
 package com.diego.listadetarefas.datasource
 
 import com.diego.listadetarefas.model.Tarefa
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,9 @@ class DataSource @Inject constructor(){
     private val _todasTarefas = MutableStateFlow<MutableList<Tarefa>>(mutableListOf())
     //observar fluxo de dados que vai entrar em todas as tarefas
     private val todasTarefas: StateFlow<MutableList<Tarefa>> = _todasTarefas
+
+    private val _nome = MutableStateFlow("")
+    private val nome: StateFlow<String> = _nome
 
     fun salvarTarefa(tarefa: String, descricao: String, prioridade: Int, checkTarefa: Boolean){
 
@@ -68,5 +72,19 @@ class DataSource @Inject constructor(){
         }.addOnFailureListener{
 
         }
+    }
+
+    fun perfilUsuario(): Flow<String>{
+        //pegar o uid do usuário logado
+        val usuarioID = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
+        db.collection("usuarios").document(usuarioID).get().addOnCompleteListener{ documentSnapshot ->
+            if (documentSnapshot.isSuccessful){
+                val nome = documentSnapshot.result.getString("nome").toString()
+
+                _nome.value = nome
+            }
+        }
+        return nome
     }
 }

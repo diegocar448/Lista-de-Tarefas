@@ -54,6 +54,7 @@ fun ListaTarefas(
 ){
     val context = LocalContext.current
     var showDialog by remember { mutableStateOf(false) }
+    val nomeUsuario = viewModel.perfilUsuario().collectAsState(initial = "").value
 
     //config. alertDialog
     @Composable
@@ -101,6 +102,8 @@ fun ListaTarefas(
                     )
                 },
                 actions = {
+                    Text(text = nomeUsuario, fontSize = 16.sp, fontWeight = FontWeight.Medium, color = WHITE)
+
                     TextButton(
                         onClick = {
                             showDialog = true
